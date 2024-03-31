@@ -150,7 +150,7 @@ const navListItems = [
     {
         label: "Registros",
         icon: UserCircleIcon,
-        to: "/login"
+        to: "/addUser"
     },
     {
         label: "Configuración",

@@ -1,8 +1,10 @@
 import React from 'react'
 import ComplexNavbar from '../component/navbar'
 import { Button, Card, Checkbox, Typography } from "@material-tailwind/react";
+import ResponsivaPdf from '../pages/responsivaPdf';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
-const TABLE_HEAD = ["Usuarios encontrados", "Numero de colaborador", "Departamento", "Puesto", "Hotel", "Selección"];
+const TABLE_HEAD = ["Selección", "Usuarios encontrados", "Numero de colaborador", "Departamento", "Puesto", "Hotel",];
 
 const TABLE_ROWS = [
     {
@@ -59,12 +61,18 @@ function responsiva() {
                             </tr>
                         </thead>
                         <tbody>
-                            {TABLE_ROWS.map(({  user, noCola, dep, pos, hotel }, index) => {
+                            {TABLE_ROWS.map(({ user, noCola, dep, pos, hotel }, index) => {
                                 const isLast = index === TABLE_ROWS.length - 1;
                                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
                                 return (
                                     <tr key={index}>
+                                        <td className="p-4 border-b border-blue-gray-50">
+                                            <Checkbox
+                                                className="h-5 w-5 rounded-full checked:bg-blue-700 border-gray-900/20 bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 "
+                                                crossOrigin={undefined}
+                                            />
+                                        </td>
                                         <td className={classes}>
                                             <Typography
                                                 variant="small"
@@ -110,12 +118,6 @@ function responsiva() {
                                                 {hotel}
                                             </Typography>
                                         </td>
-                                        <td className="p-4 border-b border-blue-gray-50">
-                                            <Checkbox
-                                                className="h-5 w-5 rounded-full checked:bg-blue-700 border-gray-900/20 bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 "
-                                                crossOrigin={undefined}
-                                            />
-                                        </td>
                                     </tr>
                                 );
                             })}
@@ -123,8 +125,13 @@ function responsiva() {
                     </table>
                 </Card>
 
-                <div className='flex flex-col pt-10 justify-end gap-y-4 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-x-4'>
-                    <Button color='blue'>Generar</Button>
+                <div className='flex flex-col pt-10 justify-end gap-y-4 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-x-4 pb-6'>
+                    <Button color='blue'>  
+                        <PDFDownloadLink document={<ResponsivaPdf />} fileName="Resposiva.pdf">
+                            Generar
+                        </PDFDownloadLink>
+                    </Button>   
+
                     <Button color='blue'>Buscar</Button>
                     <Button color='blue'>Editar</Button>
                     <Button variant="outlined">Cancel</Button>
@@ -138,3 +145,4 @@ function responsiva() {
 }
 
 export default responsiva
+
